@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/home.css" type="text/css" />
+</head>
+<!-- <style>
+    .outbox-container{
+        display: none;
+    }
+    .compose-container{
+        display: none;
+    }
+</style> -->
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="navbar">
+                <div class="logo">
+                    <h1 class="title">GMAIL</h1>
+                </div>
+                <div class="nav-actions">
+                    <div class="user-display">
+                        <p class="warning"><%= message %></p>
+                    </div>
+                    <div class="user-display">
+                        <p class="secondary-text">
+                            <%= username %>
+                        </p>
+                    </div>
+                    <div class="logout-bar">
+                        <a class="logout" href="/logout">Log out</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="content">
+            <div class="sidebar">
+                <div class="compose">
+                    <a class="primary-button" href="/home/compose">Compose</a>
+                </div>
+                <div class="inbox">
+                    <a class="secondary-button" href="/home/inbox?page=1">Inbox</a>
+                </div>
+                <div class="outbox">
+                    <a class="secondary-button" href="/home/outbox?page=1">Outbox</a>
+                </div>
+            </div>
+            <div class="card">
+                <!-- Inbox -->
+                <div class="inbox-container" <%=inbox %>>
+                    <div class="main-actions">
+                        <h1>Inbox</h1>
+                    </div>
+                    <div class="table">
+                        <table class="mail-display">
+                            <thead class="mail-rows-header">
+                                <td></td>
+                                <td>
+                                    <p class="primary-text">Sender</p>
+                                </td>
+                                <td>
+                                    <p class="primary-text">Subject</p>
+                                </td>
+                                <td>
+                                    <p class="primary-text">Date</p>
+                                </td>
+                            </thead>
+                            <% for(var i=0; i < email.length; i++) { %>
+                                <tr class="mail-rows">
+                                    <td class="mail-checkbox">
+                                        <div class="checkbox-area"><input type="checkbox"></div>
+                                    </td>
+                                    <td class="mail-sender-name">
+                                        <p class="secondary-text">
+                                            <%= email[i].sender_name %>
+                                        </p>
+                                    </td>
+                                    <td class="mail-subject">
+                                        <a class="mail-subject-text" href="/home/detail/<%= email[i].emailId %>">
+                                            <%= email[i].subject %>
+                                        </a>
+                                    </td>
+                                    <td class="mail-datetime">
+                                        <p class="secondary-text">
+                                            <%= email[i].sent_datetime %>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </table>
+
+                    </div>
+                    <div class="page-nav">
+                        <div class="pre-page">
+                            <% if(currentPage> 1) { %>
+                                <a href="/home/inbox?page=<%= (currentPage - 1) %>" class="third-button">Previous</a>
+                                <% } %>
+                        </div>
+                        <div class="pages">
+                            <% for (let i=1; i <=totalPage; i++) { %>
+                                <% if (i===currentPage) { %>
+                                    <span class="third-button">
+                                        <%= i %>
+                                    </span>
+                                    <% } else { %>
+                                        <a class="third-button" href="/home/inbox?page=<%= i %>">
+                                            <%= i %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+                        </div>
+                        <div class="next-page">
+                            <% if(currentPage < totalPage) { %>
+                                <a href="/home/inbox?page=<%= (currentPage + 1) %>" class="third-button">Next</a>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+                <!-- Outbox -->
+
+                <div class="outbox-container" <%=outbox %>>
+                    <div class="main-actions">
+                        <h1>Outbox</h1>
+                    </div>
+                    <div class="table">
+                        <table class="mail-display">
+                            <thead class="mail-rows-header">
+                                <td></td>
+                                <td>
+                                    <p class="primary-text">Recipients</p>
+                                </td>
+                                <td>
+                                    <p class="primary-text">Subject</p>
+                                </td>
+                                <td>
+                                    <p class="primary-text">Date</p>
+                                </td>
+                            </thead>
+                            <% for(var i=0; i < email.length; i++) { %>
+                                <tr class="mail-rows">
+                                    <td class="mail-checkbox">
+                                        <div class="checkbox-area"><input type="checkbox"></div>
+                                    </td>
+                                    <td class="mail-sender-name">
+                                        <p class="secondary-text">
+                                            <%= email[i].recipient_name %>
+                                        </p>
+                                    </td>
+                                    <td class="mail-subject">
+                                        <a class="mail-subject-text" href="/home/detail/<%= email[i].emailId %>">
+                                            <%= email[i].subject %>
+                                        </a>
+                                    </td>
+                                    <td class="mail-datetime">
+
+                                        <p class="secondary-text">
+                                            <%= email[i].sent_datetime %>
+                                        </p>
+
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </table>
+                    </div>
+                    <div class="page-nav">
+                        <div class="pre-page">
+                            <% if(currentPage> 1) { %>
+                                <a href="/home/outbox?page=<%= currentPage - 1 %>" class="third-button">Previous</a>
+                                <% } %>
+                        </div>
+                        <div class="pages">
+                            <% for (let i=1; i <=totalPage; i++) { %>
+                                <% if (i===currentPage) { %>
+                                    <span class="third-button">
+                                        <%= i %>
+                                    </span>
+                                    <% } else { %>
+                                        <a class="third-button" href="/home/outbox?page=<%= i %>">
+                                            <%= i %>
+                                        </a>
+                                        <% } %>
+                                            <% } %>
+                        </div>
+                        <div class="next-page">
+                            <% if(currentPage < totalPage) { %>
+                                <a href="/home/outbox?page=<%= currentPage + 1 %>" class="third-button">Next</a>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+                <!-- Compose -->
+
+                <div class="compose-container" <%=compose %>>
+                    <div class="main-actions">
+                        <h1>Compose</h1>
+                    </div>
+                    <div class="compose-area">
+                        <form class="compose-form" action="/home/compose" method="POST">
+                            <label class="compose-form-label">To: </label>
+                            <!-- <input class="compose-form-input" type="text" name="recipient" placeholder="Recipients"> -->
+                            <select name="recipient">
+                                <% for(var i=0; i < users.length; i++) { %>
+                                    <option class="" value="<%= users[i].userId %>">
+                                        <%= users[i].username %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                            <label class="compose-form-label" for="subject">Subject: </label>
+                            <input class="compose-form-input" type="text" name="subject" placeholder="Subject">
+                            <label class="compose-form-label" for="content">Content: </label>
+                            <textarea class="compose-form-body" type="text" name="content"></textarea>
+                            <div class="compose-form-actions">
+                                <button class="logout">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Detail -->
+                <div class="detail-container" <%= detail %>>
+                    <h1>Details</h1>
+                    <div class="detail-area">
+                        <div class="mail-subject-detail">
+                            <h2>
+                                <%= email.subject %>
+                            </h2>
+                        </div>
+                        <div class="mail-body-detail">
+                            <p>
+                                <%= email.body %>   
+                            </p>
+                        </div>
+                        <div class="mail-body-datetime">
+                            <p>
+                                Sent on: <%= email.sent_datetime %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+
+        </div>
+    </div>
+</body>
+
+</html>

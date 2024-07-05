@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href="/styles/global.css" type="text/css"/>
+  </head>
+  <body>
+      <div class="login-page">
+        <div class="form">
+        <h1 class="login-title"><%= title %></h1>
+          <form class="register-form" action="/auth/register" method="POST">
+            <input type="text" name="name" placeholder="Username" required/>
+            <input type="text" name="email" placeholder="Email address" required/>
+            <!-- <div class="error-area">
+                <p class="error-text"></p>
+            </div> -->
+            <!-- action="/auth/register" method="POST" -->
+            <input type="password" name="password" placeholder="Password" required/>    
+            <input type="password" name="password2" placeholder="Re-enter Password" required/>    
+            <button>create</button>
+            <p class="message">Already registered? <a href="/">Sign In</a></p>
+          </form>
+        </div>
+      </div>   
+  </body>
+</html>
